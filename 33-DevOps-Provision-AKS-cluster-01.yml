@@ -19,6 +19,7 @@ stages:
         displayName: Terraform Init
         inputs:
           command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/kube-manifests'
           backendType: 'azurerm'
           backendServiceArm: '33 Azure DevOps Provision AKS cluster 01'
           backendAzureRmSubscriptionId: 'c88c8f23-28fa-446c-9737-a0a749bb194f'
@@ -31,4 +32,5 @@ stages:
         displayName: Terraform Validate
         inputs:
           command: 'validate'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/kube-manifests'
           allowTelemetryCollection: false
