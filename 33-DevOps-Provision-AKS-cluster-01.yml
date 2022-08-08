@@ -12,14 +12,14 @@ stages:
       - task: PublishPipelineArtifact@1
         displayName: Publish Artifacts
         inputs:
-          targetPath: '$(Pipeline.Workspace)/terraform-manifests'
+          targetPath: '$(System.DefaultWorkingDirectory)/23-aks-terraform-devops01/terraform-manifests'
           artifact: 'terraform-manifests-out'
           publishLocation: 'pipeline'
       - task: TerraformCLI@0
         displayName: Terraform Init
         inputs:
           command: 'init'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/23-aks-terraform-devops01/terraform-manifests'
           backendType: 'azurerm'
           backendServiceArm: '33 Azure DevOps Provision AKS cluster 01'
           backendAzureRmSubscriptionId: 'c88c8f23-28fa-446c-9737-a0a749bb194f'
@@ -32,5 +32,5 @@ stages:
         displayName: Terraform Validate
         inputs:
           command: 'validate'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/23-aks-terraform-devops01/terraform-manifests'
           allowTelemetryCollection: false
