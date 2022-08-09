@@ -12,7 +12,7 @@ stages:
       - task: PublishPipelineArtifact@1
         displayName: Publish Artifacts
         inputs:
-          targetPath: '$(System.DefaultWorkingDirectory)'
+          targetPath: '$(System.DefaultWorkingDirectory)/kube-manifests'
           artifact: 'terraform-manifests-out'
           publishLocation: 'pipeline'
       - task: TerraformCLI@0
