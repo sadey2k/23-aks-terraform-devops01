@@ -1,0 +1,36 @@
+trigger:
+- none
+
+pool: 'TestAgentPool'
+
+stages: 
+- stage: TerraformValidate
+  jobs:
+   - job: TerraformValidateJob
+     continueOnError: false
+     steps:
+      - task: PublishPipelineArtifact@1
+        displayName: Publish Artifacts
+        inputs:
+          targetPath: '$(System.DefaultWorkingDirectory)/kube-manifests'
+          artifact: 'terraform-manifests-out'
+          publishLocation: 'pipeline'
+      - task: TerraformCLI@0
+        displayName: Terraform Init
+        inputs:
+          command: 'init'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/kube-manifests'
+          backendType: 'azurerm'
+          backendServiceArm: '33 Azure DevOps Provision AKS cluster 01'
+          backendAzureRmSubscriptionId: 'c88c8f23-28fa-446c-9737-a0a749bb194f'
+          backendAzureRmResourceGroupName: 'aks-resources-rg'
+          backendAzureRmStorageAccountName: 'storageaccountshola'
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: 'aks-base.tfstate'
+          allowTelemetryCollection: false
+      - task: TerraformCLI@0
+        displayName: Terraform Validate
+        inputs:
+          command: 'validate'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/kube-manifests'
+          allowTelemetryCollection: false
