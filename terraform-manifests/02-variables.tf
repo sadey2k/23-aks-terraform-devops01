@@ -10,7 +10,7 @@ variable "aks_location" {
 }
 
 ### NOT USED HERE - REFERENCED IN DEVOPS PIPELINE ###
-Environment variable
+# Environment variable
 variable "environment" {
   type        = string
   default     = "dev"
