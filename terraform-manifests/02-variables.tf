@@ -10,12 +10,12 @@ variable "aks_location" {
 }
 
 ### NOT USED HERE - REFERENCED IN DEVOPS PIPELINE ###
-# Environment variable
-# variable "environment" {
-#   type        = string
-#   default     = "dev"
-#   description = "Environment to be deployed to"
-# }
+Environment variable
+variable "environment" {
+  type        = string
+  default     = "dev"
+  description = "Environment to be deployed to"
+}
 
 # SSH key location 
 variable "ssh_key" {
