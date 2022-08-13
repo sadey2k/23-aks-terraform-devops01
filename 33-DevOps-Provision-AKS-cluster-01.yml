@@ -22,6 +22,10 @@ stages:
           targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
           artifact: 'terraform-manifests-out'
           publishLocation: 'pipeline'
+      - task: TerraformInstaller@0
+        displayName: Terraform Install
+        inputs:
+          terraformVersion: 'latest'
       - task: TerraformCLI@0
         displayName: Terraform Init
         inputs:
@@ -70,7 +74,7 @@ stages:
               displayName: Terraform Init
               inputs:
                 command: 'init'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests-out'
+                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests-out'
                 backendType: 'azurerm'
                 backendServiceArm: '33 Azure DevOps Provision AKS cluster 01'
                 backendAzureRmSubscriptionId: 'c88c8f23-28fa-446c-9737-a0a749bb194f'
@@ -83,7 +87,7 @@ stages:
               displayName: Terraform Plan
               inputs:
                 command: 'plan'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests-out'
+                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests-out'
                 environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
                 commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
@@ -91,8 +95,8 @@ stages:
               displayName: Terraform Apply
               inputs:
                 command: 'apply'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests-out'
+                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests-out'
                 environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
-                commandOptions: '$(System.DefaultWorkingDirectory)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                commandOptions: '$(Pipieline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
 
