@@ -84,7 +84,7 @@ stages:
               inputs:
                 command: 'plan'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                environmentServiceName: 'terraform-aks-azurerm-svc-con'
+                environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
                 commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
@@ -92,7 +92,7 @@ stages:
               inputs:
                 command: 'apply'
                 workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
-                environmentServiceName: 'terraform-aks-azurerm-svc-con'
+                environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
                 commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
 
