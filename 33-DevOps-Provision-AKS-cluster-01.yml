@@ -74,7 +74,7 @@ stages:
               displayName: Terraform Init
               inputs:
                 command: 'init'
-                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests-out'
+                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests'
                 backendType: 'azurerm'
                 backendServiceArm: '33 Azure DevOps Provision AKS cluster 01'
                 backendAzureRmSubscriptionId: 'c88c8f23-28fa-446c-9737-a0a749bb194f'
@@ -87,7 +87,7 @@ stages:
               displayName: Terraform Plan
               inputs:
                 command: 'plan'
-                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests-out'
+                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests'
                 environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
                 commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
@@ -95,7 +95,7 @@ stages:
               displayName: Terraform Apply
               inputs:
                 command: 'apply'
-                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests-out'
+                workingDirectory: '$(Pipieline.Workspace)/terraform-manifests'
                 environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
                 commandOptions: '$(Pipieline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
