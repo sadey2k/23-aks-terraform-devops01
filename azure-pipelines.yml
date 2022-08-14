@@ -10,3 +10,17 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
     allowTelemetryCollection: false
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+    allowTelemetryCollection: false
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+    environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
+    allowTelemetryCollection: false
+    publishPlanResults: 'terraform-plan.out'
