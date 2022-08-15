@@ -19,8 +19,8 @@ stages:
       - task: PublishPipelineArtifact@1
         displayName: Publish Artifacts
         inputs:
-          targetPath: '$(System.DefaultWorkingDirectory)'
-          artifact: 'terraform-manifests-out'
+          targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+          artifact: 'artifact-name'
           publishLocation: 'pipeline'
       - task: TerraformCLI@0
         displayName: Terraform Init
@@ -70,7 +70,7 @@ stages:
               displayName: Terraform Init
               inputs:
                 command: 'init'
-                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                workingDirectory: '$(System.DefaultWorkingDirectory)'
                 backendType: 'azurerm'
                 backendServiceArm: '33 Azure DevOps Provision AKS cluster 01'
                 backendAzureRmSubscriptionId: 'c88c8f23-28fa-446c-9737-a0a749bb194f'
@@ -83,16 +83,16 @@ stages:
               displayName: Terraform Plan
               inputs:
                 command: 'plan'
-                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                workingDirectory: '$(System.DefaultWorkingDirectory)'
                 environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
-                commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                commandOptions: '-var ssh_public_key=$(sshkey.secureFilePath) -var environment=$(DEV_ENVIRONMENT) -out $(System.DefaultWorkingDirectory)/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
             - task: TerraformCLI@0
               displayName: Terraform Apply
               inputs:
                 command: 'apply'
-                workingDirectory: '$(Pipeline.Workspace)/terraform-manifests-out'
+                workingDirectory: '$(System.DefaultWorkingDirectory)'
                 environmentServiceName: '33 Azure DevOps Provision AKS cluster 01'
-                commandOptions: '$(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
+                commandOptions: '$(System.DefaultWorkingDirectory)/$(DEV_ENVIRONMENT)-$(Build.BuildId).out'
                 allowTelemetryCollection: false
 
